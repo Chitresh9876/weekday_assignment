@@ -1,0 +1,38 @@
+.job-posted{
+    margin: 1rem 1rem 0rem 1rem;
+    padding: 0.3rem;
+    font-size: small;
+    box-shadow: 0.2px 0.2px 0.2px 1px rgb(229, 227, 227);
+    border-radius: 0.5rem;
+    width : 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.2rem;
+    
+}
+
+.job-posted>p{
+    font-size: 0.6rem;
+}
+
+#job-description{
+    font-size: 0.9rem;
+    color: #000000;
+    height: 15rem;
+    overflow: hidden;
+    text-align: justify;
+    position: relative;
+
+}
+
+#job-description::before{
+    background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255, 255, 255, 0) 100%);
+    content: '';
+    height: 10rem;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom: 0;
+}
