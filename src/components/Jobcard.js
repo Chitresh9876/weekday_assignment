@@ -1,10 +1,11 @@
 import { Button, Card, CardContent, CardHeader, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles';
 import './Jobcard.css'
 import watchGlass from "../assets/watch_glass.png";
 import lightning from "../assets/lightning.png";
 import tick from "../assets/tick.png";
+import Filter from './Filter';
 
 
 const BootstrapButton = styled(Button)({
@@ -23,10 +24,24 @@ const BootstrapButton = styled(Button)({
 
 const Jobcard = () => {
 
+    const [role, setRole] = useState([]);
+    const [numOfEmployees, setNumOfEmployees] = useState([]);
+    const [experience, setExperience] = useState([]);
+    const [remote, setRemote] = useState([]);
+    const [minBasePay, setMinBasePay] = useState([]);
+    const [companyName, setCompanyName] = useState([]);
+    const [referral, setReferral] = useState(false);
+
+    useEffect(() => {
+        console.log(role);
+    },[role, numOfEmployees, experience, remote, minBasePay, companyName, referral])
+
     const subtitle = <ul style={{listStyle:"none"}}><li>Role</li><li style={{fontSize:"0.7rem", fontWeight:"550"}}>Location</li></ul>
 
-  return (
-      <Card sx={{ maxWidth: 400 }} style={{ borderRadius: "1rem", margin:"1rem" }} >
+    return (
+        <>
+            <Filter role={role} setRole={setRole} numOfEmployees={numOfEmployees} setNumOfEmployees={setNumOfEmployees} experience={experience} setExperience={setExperience} remote={remote} setRemote={setRemote} minBasePay={minBasePay} setMinBasePay={setMinBasePay} companyName={companyName} setCompanyName={setCompanyName} referral={referral} setReferral={setReferral} />
+      <Card sx={{ maxWidth: 400 }} style={{ borderRadius: "1rem"}} >
           <div className='job-posted'>
               <img src={watchGlass} alt='time-logo' height={"10rem"} />
               <p style={{fontWeight:"550"}}>Posted 6 days ago</p>
@@ -62,7 +77,8 @@ const Jobcard = () => {
               <BootstrapButton variant="contained" style={{ backgroundColor: "#42F68B", color: '#000000', fontWeight: "550" }} fullWidth> <img src={lightning} alt='lightning' height={"20rem"} /> Easy Apply</BootstrapButton>
               <BootstrapButton variant="contained" style={{ backgroundColor:"#0531E7"}} fullWidth>Unlock referral asks</BootstrapButton>
           </CardContent>
-    </Card>
+            </Card>
+            </>
   )
 }
 
