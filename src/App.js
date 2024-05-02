@@ -13,7 +13,7 @@ function App() {
     const [remote, setRemote] = useState([]);
     const [minBasePay, setMinBasePay] = useState([]);
     const [companyName, setCompanyName] = useState([]);
-  const [referral, setReferral] = useState(false);
+  const [filterData, setFilteredData] = useState([]);
   
   const [offset, setOffset] = useState(0);
   const [data, setData] = useState([]);
@@ -50,25 +50,71 @@ function App() {
     },[offset])
   
   useEffect(() => {
-        console.log(role);
-    },[role, numOfEmployees, experience, remote, minBasePay, companyName, referral],[])
+    if(role.length > 0)
+      filterItems({
+        "key": 'jobRole',
+      'value': role});
+    // if(numOfEmployees.length > 0)  Filter can't be achive for this property because no such field is coming for backend
+    // filterItems(numOfEmployees);
+    if(experience.length > 0)
+    filterItems({
+        "key": 'minExp',
+      'value': experience});
+    if(remote.length > 0)
+    filterItems({
+        "key": 'location',
+      'value': remote});
+    if(minBasePay.length > 0)
+    filterItems({
+        "key": 'minJdSalary',
+      'value': minBasePay});
+    // if(companyName.length > 0)  Filter can't be achive for this property because no such field is coming for backend
+    // filterItems(companyName);
+  }, [role, numOfEmployees, experience, remote, minBasePay, companyName, data]);
 
+  const filterItems = (items) => {
+    console.log(items)
+    setFilteredData([...data]);
+    if (items?.value?.length > 0) {
+      let tempItem = items?.value.map((item) => {
+        let temp;
+        if(items?.key === 'jobRole')
+          temp = data.filter((dataItem) => dataItem?.jobRole === item.toLowerCase());
+        if(items?.key === 'minExp')
+          temp = data.filter((dataItem) => dataItem?.minExp >= item.toLowerCase());
+        if(items?.key === 'location')
+          temp = data.filter((dataItem) => dataItem?.location === item.toLowerCase());
+        if(items?.key === 'minJdSalary')
+        temp = data.filter((dataItem) => dataItem?.minJdSalary >= item.toLowerCase());
+        return temp;
+      });
+      console.log(tempItem);
+      tempItem.map((item) => {
+        
+        setFilteredData([...filterData, ...item]);
+      })
+    }
+    else {
+      setFilteredData([...data]);
+    }
+  }
   const fetchMoreData = async () => {
     setOffset(offset + 12);
+    fetchData();
   }
   return (
     <div className='main-body'>
-       <Filter role={role} setRole={setRole} numOfEmployees={numOfEmployees} setNumOfEmployees={setNumOfEmployees} experience={experience} setExperience={setExperience} remote={remote} setRemote={setRemote} minBasePay={minBasePay} setMinBasePay={setMinBasePay} companyName={companyName} setCompanyName={setCompanyName} referral={referral} setReferral={setReferral} />
+       <Filter role={role} setRole={setRole} numOfEmployees={numOfEmployees} setNumOfEmployees={setNumOfEmployees} experience={experience} setExperience={setExperience} remote={remote} setRemote={setRemote} minBasePay={minBasePay} setMinBasePay={setMinBasePay} companyName={companyName} setCompanyName={setCompanyName} />
       <InfiniteScroll
-        dataLength={data.length}
+        dataLength={filterData.length>0 ? filterData.length : data.length}
         next={fetchMoreData}
-        hasMore={data?.length < totalDataLength}
+        hasMore={(filterData.length>0 ? filterData.length : data.length) < totalDataLength}
         loader={<Loader/>}
       >
         <Stack direction={"row"} gap={2} flexWrap={"wrap"} justifyContent={"center"}>
-          {console.log(data)}
+          {console.log(filterData)}
           {
-            data.map((data,index) => {
+            (filterData.length>0 ? filterData : data).map((data,index) => {
               return <div key={index}> <Jobcard role={data?.jobRole} location={data?.location} minSalary={data?.minJdSalary | 0} maxSalary={data?.maxJdSalary | 0} jobDetail={data?.jobDetailsFromCompany} minExperiance={data?.minExp | 0} applyLink={data?.jdLink} /> </div>
             })
 }

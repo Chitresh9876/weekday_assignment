@@ -1,12 +1,10 @@
 import { Button, Card, CardContent, CardHeader, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { styled } from '@mui/material/styles';
 import './Jobcard.css'
 import watchGlass from "../assets/watch_glass.png";
 import lightning from "../assets/lightning.png";
 import tick from "../assets/tick.png";
-import Filter from './Filter';
-import { useNavigate } from 'react-router-dom';
 
 
 const BootstrapButton = styled(Button)({
@@ -30,7 +28,7 @@ const Jobcard = ({role, location, minSalary, maxSalary, jobDetail, minExperiance
 
     return (
         <>
-      <Card sx={{ minWidth: 350, maxWidth: 400 }} style={{ borderRadius: "1rem"}} >
+      <Card sx={{ minWidth: 250, maxWidth: 400 }} style={{ borderRadius: "1rem"}} >
           <div className='job-posted'>
               <img src={watchGlass} alt='time-logo' height={"10rem"} />
               <p style={{fontWeight:"550"}}>Posted 6 days ago</p>
@@ -46,7 +44,7 @@ const Jobcard = ({role, location, minSalary, maxSalary, jobDetail, minExperiance
           />
           <CardContent>
               <Typography variant="h6" fontSize={"0.8rem"} fontWeight={550} color="text.secondary">
-                  Estimated Salary: ₹{minSalary}-{maxSalary} LPA <img src={tick} alt="image" style={{height: "0.9rem", marginBottom:"-0.1rem"}}/>
+                  Estimated Salary: ₹{minSalary}-{maxSalary} LPA <img src={tick} alt="tick" style={{height: "0.9rem", marginBottom:"-0.1rem"}}/>
               </Typography>
               <Typography variant="h6" marginTop={1.5} fontSize={"1rem"} fontWeight={550} color="text.primary">
                   About Company:
