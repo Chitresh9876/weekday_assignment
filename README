@@ -1,0 +1,14 @@
+Steps to run this repo in your local system
+
+Prerequsits : Installed Node js and git
+
+Step 1: Clone the repo by executing the following commands on terminal
+        git clone "https://github.com/Chitresh9876/weekday_assignment.git"
+
+Step 2: Install the nessery dependencies by running the folllowing command on termal
+        npm install
+
+Step 3: Run the React js file by the command
+        npm start
+
+        
